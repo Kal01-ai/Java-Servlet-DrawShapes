@@ -15,4 +15,5 @@ This is an attempt to turn our previous GUI project into a servlet.
 
 Program Output:
 
+<img width="904" alt="test" src="https://user-images.githubusercontent.com/58899364/96441170-aaa14c00-123b-11eb-9e5d-d7eb850d4e42.png">
 
