@@ -2,6 +2,7 @@ package servlet.pbl1;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.GeneralPath;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Random;
@@ -24,10 +25,11 @@ public class DrawShapes extends HttpServlet
 	 */
 	private static final long serialVersionUID = 1L;
 	private Random random = new Random();
-	
+	int xPoints[] = {9, 15, 0, 18, 3};
+	int yPoints[] = {0, 18, 6, 6, 18};
 	int x = 480;
 	int y = 480;
-
+	
 	protected void doGet ( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
     {
         response.setContentType( "text/html" );
@@ -46,6 +48,7 @@ public class DrawShapes extends HttpServlet
         		+ "         <input type = \"submit\" name = \"btn\" value = \"Circle\" />\r\n"
         		+ "         <input type = \"submit\" name = \"btn\" value = \"Square\" />\r\n"
         		+ "         <input type = \"submit\" name = \"btn\" value = \"Rectangle\" />\r\n"
+        	    + "         <input type = \"submit\" name = \"btn\" value = \"Star\" />\r\n"
         		+ "      </form>\r\n"
         		+ "   </body>\r\n"
         		+ "</html>"); 
@@ -56,9 +59,9 @@ public class DrawShapes extends HttpServlet
    	            "<body bgcolor = \"#f0f0f0\">\n" +
    	               "<h1 align = \"center\">" + title + "</h1>\n" +
    	               "<ul>\n" +
-   	                  "  <li><b>Color</b>: (Case Sensitive) Red, Green, Blue and Yellow"
+   	                  "  <li><b>Color (Case Sensitive)</b>: Red, Green, Blue, Yellow, Orange and Cyan OR NULL (White)"
    	                  +  "\n" +
-   	                  "  <li><b>Shape</b>: Any integer (Limit is less than or equal to 1000 only)"
+   	                  "  <li><b>Number of Shape (CANNOT BE NULL)</b>: ZERO or Any Integer (Limit is less than or equal to 1000 only)"
    	                  +  "\n" +
    	               "</ul>\n" +
    	            "</body>"+
@@ -90,20 +93,23 @@ public class DrawShapes extends HttpServlet
         	g.setColor(Color.BLUE); break;
         case "Yellow":
         	g.setColor(Color.YELLOW); break;
+        case "Orange":
+        	g.setColor(Color.ORANGE); break;
+        case "Cyan":
+        	g.setColor(Color.CYAN); break;
         }
         
         String shapeSelected = request.getParameter( "btn" );
         if(shapeSelected.equals("Circle") && i <= 1000)
         {
         	for(int j = 0; j < i; j++) {
-        	g.fillOval( random.nextInt(x), random.nextInt(y), 10, 10 ); }
+        	g.fillOval(random.nextInt(x), random.nextInt(y), 10, 10); }
             ImageIO.write(bi, "jpeg", sos);
         }
-        
         else if(shapeSelected.equals("Square") && i <= 1000)
         {
         	for(int j = 0; j < i; j++) {
-            g.fillRect( random.nextInt(x), random.nextInt(y), 10, 10 ); }
+            g.fillRect(random.nextInt(x), random.nextInt(y), 10, 10); }
             ImageIO.write(bi, "jpeg", sos);
         }
         else if(shapeSelected.equals("Rectangle") && i <= 1000)
@@ -111,6 +117,21 @@ public class DrawShapes extends HttpServlet
         	for(int j = 0; j < i; j++) {
         	g.fillRect(random.nextInt(x), random.nextInt(y), 20, 10); }
         	ImageIO.write(bi, "jpeg", sos);
+        }
+        else if(shapeSelected.equals("Star") && i <= 1000)
+        {	
+    		GeneralPath star = new GeneralPath();
+    		for(int j = 0; j < i; j++) {
+    		int maxX = random.nextInt(x);
+    		int maxY = random.nextInt(y);
+    		star.moveTo(xPoints[0] + maxX, yPoints[0] + maxY);
+    		
+    		for(int iStar = 1; iStar < xPoints.length; iStar++) {
+    		star.lineTo(xPoints[iStar] + maxX, yPoints[iStar] + maxY); }
+    		star.closePath();
+    		
+    		g.fill(star); }
+    		ImageIO.write(bi, "jpeg", sos);
         }
     }
 }
