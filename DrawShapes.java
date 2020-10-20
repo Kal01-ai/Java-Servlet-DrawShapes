@@ -46,7 +46,6 @@ public class DrawShapes extends HttpServlet
         		+ "         <input type = \"submit\" name = \"btn\" value = \"Circle\" />\r\n"
         		+ "         <input type = \"submit\" name = \"btn\" value = \"Square\" />\r\n"
         		+ "         <input type = \"submit\" name = \"btn\" value = \"Rectangle\" />\r\n"
-        		// + "         <input type = \"submit\" name = \"btn\" value = \"Star\" />\r\n"
         		+ "      </form>\r\n"
         		+ "   </body>\r\n"
         		+ "</html>"); 
