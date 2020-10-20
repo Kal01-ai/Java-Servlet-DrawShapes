@@ -25,8 +25,8 @@ public class DrawShapes extends HttpServlet
 	private static final long serialVersionUID = 1L;
 	private Random random = new Random();
 	
-	int x = 490;
-	int y = 490;
+	int x = 480;
+	int y = 480;
 
 	protected void doGet ( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
     {
@@ -45,6 +45,8 @@ public class DrawShapes extends HttpServlet
         		+ "         How many shapes: <input type = \"text\" name = \"shape_number\">\r\n"
         		+ "         <input type = \"submit\" name = \"btn\" value = \"Circle\" />\r\n"
         		+ "         <input type = \"submit\" name = \"btn\" value = \"Square\" />\r\n"
+        		+ "         <input type = \"submit\" name = \"btn\" value = \"Rectangle\" />\r\n"
+        		// + "         <input type = \"submit\" name = \"btn\" value = \"Star\" />\r\n"
         		+ "      </form>\r\n"
         		+ "   </body>\r\n"
         		+ "</html>"); 
@@ -55,10 +57,10 @@ public class DrawShapes extends HttpServlet
    	            "<body bgcolor = \"#f0f0f0\">\n" +
    	               "<h1 align = \"center\">" + title + "</h1>\n" +
    	               "<ul>\n" +
-   	                  "  <li><b>Color</b>: Value available (Case Sensitive) = Red, Blue or "
-   	                  + request.getParameter("shape_color") + "\n" +
-   	                  "  <li><b>Shape</b>: Value available = Any integer (Limit is less than or equal to 1000 only) or "
-   	                  + request.getParameter("shape_number") + "\n" +
+   	                  "  <li><b>Color</b>: (Case Sensitive) Red, Green, Blue and Yellow"
+   	                  +  "\n" +
+   	                  "  <li><b>Shape</b>: Any integer (Limit is less than or equal to 1000 only)"
+   	                  +  "\n" +
    	               "</ul>\n" +
    	            "</body>"+
    	         "</html>"
@@ -80,35 +82,36 @@ public class DrawShapes extends HttpServlet
         int i = amount;
         		
         String colorSelected = request.getParameter("shape_color");
+        switch(colorSelected) {
+        case "Red":
+        	g.setColor(Color.RED); break;
+        case "Green":
+        	g.setColor(Color.GREEN); break;
+        case "Blue":
+        	g.setColor(Color.BLUE); break;
+        case "Yellow":
+        	g.setColor(Color.YELLOW); break;
+        }
         
-        String shapeselected = request.getParameter( "btn" );
-        if ( shapeselected.equals( "Circle" ) && i <= 1000)
+        String shapeSelected = request.getParameter( "btn" );
+        if(shapeSelected.equals("Circle") && i <= 1000)
         {
-        	if(colorSelected.equals("Blue"))
-        	{
-        		g.setColor(Color.BLUE);
-        	} else if(colorSelected.equals("Red"))
-        	{
-        		g.setColor(Color.RED);
-        	}
         	for(int j = 0; j < i; j++) {
         	g.fillOval( random.nextInt(x), random.nextInt(y), 10, 10 ); }
-            // g.dispose();
-            ImageIO.write( bi, "jpeg", sos );
-        	
+            ImageIO.write(bi, "jpeg", sos);
         }
-        else if ( shapeselected.equals( "Square" ) && i <= 1000)
+        
+        else if(shapeSelected.equals("Square") && i <= 1000)
         {
-        	if(colorSelected.equals("Blue"))
-        	{
-        		g.setColor(Color.BLUE);
-        	} else if(colorSelected.equals("Red"))
-        	{
-        		g.setColor(Color.RED);
-        	}
         	for(int j = 0; j < i; j++) {
             g.fillRect( random.nextInt(x), random.nextInt(y), 10, 10 ); }
-            ImageIO.write( bi, "jpeg", sos );
+            ImageIO.write(bi, "jpeg", sos);
+        }
+        else if(shapeSelected.equals("Rectangle") && i <= 1000)
+        {
+        	for(int j = 0; j < i; j++) {
+        	g.fillRect(random.nextInt(x), random.nextInt(y), 20, 10); }
+        	ImageIO.write(bi, "jpeg", sos);
         }
     }
 }
